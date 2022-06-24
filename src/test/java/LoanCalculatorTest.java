@@ -16,27 +16,28 @@ public class LoanCalculatorTest {
     @ParameterizedTest
     @MethodSource("provideArgumentsForCalcLoanPayment")
     public void calcLoanPaymentTest(LoanPayment typeLoanPayment, double expected) {
-        double loan = 5000;
+        double loan = 50000;
         double percent = 10;
-        int loanTerm = 5;
+        int loanTerm = 12;
+        int completedPayments = 0;
 
         LoanCalculator loanCalculator = Mockito.mock(LoanCalculator.class);
-        Mockito.when(loanCalculator.calcLoanPayment(loan, percent, loanTerm, loan, typeLoanPayment))
+        Mockito.when(loanCalculator.calcLoanPayment(loan, percent, loanTerm, completedPayments, typeLoanPayment))
                 .thenReturn(expected);
 
-        double actual = new LoanCalculator().calcLoanPayment(loan, percent, loanTerm, loan, typeLoanPayment);
+        double actual = new LoanCalculator().calcLoanPayment(loan, percent, loanTerm, completedPayments, typeLoanPayment);
 
         Assertions.assertEquals(expected, actual);
     }
 
     public static Stream<Arguments> provideArgumentsForCalcLoanPayment() {
-        return Stream.of(Arguments.of(annLoanPayment, 1025.14), Arguments.of(diffLoanPayment, 1041.10));
+        return Stream.of(Arguments.of(annLoanPayment, 4583.33334), Arguments.of(diffLoanPayment, 4583.31667));
     }
 
     @ParameterizedTest
     @MethodSource("provideArgumentsForCalcTotalAmount")
     public void calcTotalLoanAmountTest(LoanPayment typeLoanPayment, double expected) {
-        double loan = 5000;
+        double loan = 50000;
         double percent = 10;
 
         LoanCalculator loanCalculator = Mockito.mock(LoanCalculator.class);
@@ -49,13 +50,13 @@ public class LoanCalculatorTest {
     }
 
     public static Stream<Arguments> provideArgumentsForCalcTotalAmount() {
-        return Stream.of(Arguments.of(annLoanPayment, 5126), Arguments.of(diffLoanPayment, 5125));
+        return Stream.of(Arguments.of(annLoanPayment, 55000), Arguments.of(diffLoanPayment, 55002));
     }
 
     @ParameterizedTest
     @MethodSource("provideArgumentsForCalcOverpayment")
     public void calcOverpayment(LoanPayment typeLoanPayment, double expected) {
-        double loan = 5000;
+        double loan = 50000;
         double percent = 10;
 
         LoanCalculator loanCalculator = Mockito.mock(LoanCalculator.class);
@@ -68,6 +69,6 @@ public class LoanCalculatorTest {
     }
 
     public static Stream<Arguments> provideArgumentsForCalcOverpayment() {
-        return Stream.of(Arguments.of(annLoanPayment, 126), Arguments.of(diffLoanPayment, 125));
+        return Stream.of(Arguments.of(annLoanPayment, 5000), Arguments.of(diffLoanPayment, 5002));
     }
 }
