@@ -31,7 +31,7 @@ public class LoanCalculatorTest {
     }
 
     public static Stream<Arguments> provideArgumentsForCalcLoanPayment() {
-        return Stream.of(Arguments.of(annLoanPayment, 4583.33334), Arguments.of(diffLoanPayment, 4583.31667));
+        return Stream.of(Arguments.of(annLoanPayment, 4583.333333333334), Arguments.of(diffLoanPayment, 45833.33333333333));
     }
 
     @ParameterizedTest
